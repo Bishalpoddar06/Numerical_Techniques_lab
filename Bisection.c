@@ -1,66 +1,57 @@
 #include <stdio.h>
 #include <math.h>
+#include <time.h>
 
-float f(float x)
+/* Define the function */
+double f(double x)
 {
-    return 4 * pow(x, 3) - 6 * pow(x, 2) + 7 * x - 2.3;
+    return cos(x) - x * exp(x);
 }
 
 int main()
 {
-    int i = 0, n;
-    float a, b, x, er, r, toll;
+    double a, b, c, tol;
+    int iterations = 0;
+    clock_t start, end;
+    double time_taken;
 
-    printf("Enter a: ");
-    scanf("%f", &a);
+    /* Input section */
+    printf("Enter the initial interval a and b: ");
+    scanf("%lf %lf", &a, &b);
 
-    printf("Enter b: ");
-    scanf("%f", &b);
+    printf("Enter the tolerance value: ");
+    scanf("%lf", &tol);
 
-    printf("Enter Tolerance: ");
-    scanf("%f", &toll);
-
-    printf("Enter number of iterations: ");
-    scanf("%d", &n);
-
+    /* Check for valid interval */
     if (f(a) * f(b) >= 0)
     {
-        printf("Invalid interval. f(a) and f(b) must have opposite signs.\n");
+        printf("Invalid interval! f(a) and f(b) must have opposite signs.\n");
         return 0;
     }
 
-    r = (a + b) / 2;
-    er = 1;
+    start = clock();
 
-    while (er >= toll && i < n)
+    /* Bisection Method */
+    do
     {
-        if (f(r) * f(a) < 0)
-            b = r;
+        c = (a + b) / 2.0;
+        iterations++;
+
+        if (f(a) * f(c) < 0)
+            b = c;
         else
-            a = r;
+            a = c;
 
-        x = r;
-        r = (a + b) / 2;
+    } while (fabs(b - a) >= tol);
 
-        if (x != 0)
-            er = fabs((r - x) / x);
+    end = clock();
 
-        i++;
-    }
+    time_taken = ((double)(end - start)) / CLOCKS_PER_SEC;
 
-    if (i == n)
-
-        printf("Root not found within %d iterations.\n");
-    else
-        printf("The root is = %f\n", r);
+    /* Output section */
+    printf("\nRoot of the equation = %.6f\n", c);
+    printf("Number of iterations = %d\n", iterations);
+    printf("Execution time = %lf seconds\n", time_taken);
 
     return 0;
 }
-/*
-OUTPUT-
-Enter a: 0
-Enter b: 1
-Enter Tolerance: 0.001
-Enter number of iterations: 15
-The root is = 0.449951
-*/
