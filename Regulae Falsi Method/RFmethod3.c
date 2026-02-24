@@ -17,6 +17,10 @@ int main()
     fa = f(a);
     fb = f(b);
 
+    printf("---------------------------------------------------------------\n");
+    printf("Iter\t   a\t\t   b\t\t   r\t\t  f(r)\t\t Error\n");
+    printf("---------------------------------------------------------------\n");
+
     y = b;
     r = a - (a - b) * fa / (fa - fb);
     error = fabs((y - r) / r);
@@ -24,6 +28,9 @@ int main()
     while (error > tol && iter <= N)
     {
         fr = f(r);
+
+        printf("%3d\t% .6f\t% .6f\t% .6f\t% .6f\t% .6f\n",
+               iter, a, b, r, fr, error);
 
         if (fa * fr < 0)
         {
@@ -43,6 +50,7 @@ int main()
         iter++;
     }
 
+    printf("---------------------------------------------------------------\n");
     printf("Root (4 significant digits) = %.4lf\n", r);
     printf("Iterations = %d\n", iter);
 
