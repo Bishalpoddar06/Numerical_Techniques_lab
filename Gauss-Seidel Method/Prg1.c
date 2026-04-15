@@ -50,7 +50,7 @@ int main() {
 
     printf("\nGauss-Seidel iterations:\n");
 
-    for (k = 1; k <= 3; k++) {
+     for (k = 1; k <= 10; k++) {
         for (i = 0; i < n; i++) {
             double sum = b[i];
 
@@ -68,7 +68,6 @@ int main() {
         }
         printf("\n");
     }
-
     return 0;
 }
 /*
